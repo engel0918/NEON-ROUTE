@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: 5990dc2e07cbbe441b4dc4b23131618a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - MainUI: {instanceID: 0}
+  - SetUI: {instanceID: 0}
+  - ExitUI: {instanceID: 0}
+  - Scene_Loading: {fileID: 8924280822610115962, guid: 88064c8b4af2cd5468429de936a1b374,
+      type: 3}
+  - audioMixer: {fileID: 24100000, guid: d9e07e238d290544fae3ba614ec93775, type: 2}
+  - Sld_SS: {instanceID: 0}
+  - INF_SS: {instanceID: 0}
+  - Dd_GQ: {instanceID: 0}
+  - Dd_Aa: {instanceID: 0}
+  - Dd_Gm: {instanceID: 0}
+  - Dd_Res: {instanceID: 0}
+  - Sld_Mv: {instanceID: 0}
+  - txt_Mv: {instanceID: 0}
+  - Sld_BGMv: {instanceID: 0}
+  - txt_BGMv: {instanceID: 0}
+  - Sld_SFXv: {instanceID: 0}
+  - txt_SFXv: {instanceID: 0}
+  - Dd_Lang: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

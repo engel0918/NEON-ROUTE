@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c7a65a3b670c2f145b4db4245890b352
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304307
+  packageName: character effects (shaders)
+  packageVersion: 1.0
+  assetPath: Assets/characterEffects/shaders/ghostEffect/ghostMaterial.mat
+  uploadId: 717253
