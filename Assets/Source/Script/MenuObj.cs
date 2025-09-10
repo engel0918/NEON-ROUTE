@@ -10,26 +10,19 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System.Linq;
-using Unity.VisualScripting;
-
 
 
 public class MenuObj : MonoBehaviour
 {
     private const string SETTINGS_FILE = "settings.json";
+    private const string Inventory_Path = "Inventory.json";
     SteamSave Steam;
 
-    [Header("Set UI 지정")]
-    public GameObject MainUI, SetUI, ExitUI;
-
-    [Header("Else UI 지정")]
-    public GameObject Inven_UI;
+    public GameObject MainUI, SetUI, ExitUI, Inven_UI;
 
     // 0. 적용UI를 지정
     [Header("Menu에서 지정")]
     public PageCtrl page;
-
     public HoverUI hover;
 
     [Header("필수 지정값")]
@@ -185,6 +178,7 @@ public class MenuObj : MonoBehaviour
         Sld_SFXv.value = SFXv;
         txt_SFXv.text = SFXv.ToString("F0") + "%";
 
+        //---------------------------------------------------
     }
 
     // 메뉴에서 켜는 설정메뉴
@@ -314,6 +308,27 @@ public class MenuObj : MonoBehaviour
 
         Steam.SaveSettings(ints, floats);
         Apply();
+
+        //인벤토리 빈값 지정
+        List<string> Inven_Con = new List<string>();
+        List<string> Inven_Val = new List<string>();
+        List<string> Inven_MAT = new List<string>();
+
+        List<int> Count_Con = new List<int>();
+        List<int> Count_Val = new List<int>();
+        List<int> Count_MAT = new List<int>();
+
+        int G = 0;
+
+        for (int i = 0; i <= 23; i++)
+        {
+            Inven_Con.Add("null"); Inven_Val.Add("null"); Inven_MAT.Add("null");
+            Count_Con.Add(0); Count_Val.Add(0); Count_MAT.Add(0);
+        }
+
+        Steam.SaveInven(Inven_Con, Inven_MAT, Inven_Val, Count_Con, Count_MAT, Count_Val, G);
+
+        //-----------------------------------------------------
     }
 
     //실제 적용

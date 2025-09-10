@@ -14,7 +14,6 @@ public class Fin_Func : MonoBehaviour
     public GameObject Press_F;
 
     Player_Ctrl Player;
-    GameMgr gameMgr;
     SteamSave steam;
 
     private void Awake()
@@ -25,7 +24,6 @@ public class Fin_Func : MonoBehaviour
 
     private void Start()
     {
-        gameMgr = GameObject.FindGameObjectWithTag("GameMgr").GetComponent<GameMgr>();
 
         Menu = Instantiate(Menu_Prefab).GetComponent<MenuCtrl>();
         Player = Instantiate(Player_Prefab, StartPos.position, StartPos.rotation).GetComponent<Player_Ctrl>();

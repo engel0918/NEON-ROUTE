@@ -19,17 +19,6 @@ public class SteamManager : MonoBehaviour
         }
 
         s_instance = this;
-        //DontDestroyOnLoad(gameObject);
-
-        if (!Packsize.Test())
-        {
-            Debug.LogError("Packsize 불일치");
-        }
-
-        if (!DllCheck.Test())
-        {
-            Debug.LogError("Steamworks.NET DLL 불일치");
-        }
 
         try
         {

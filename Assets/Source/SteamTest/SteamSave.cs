@@ -2,12 +2,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using static System.Net.Mime.MediaTypeNames;
+using System.Security.Cryptography;
 
 [System.Serializable]
 
@@ -17,6 +15,13 @@ public class SettingsData
     public int GQ, AA, GM, RES;
     public float Mv, BGMv, SFXv;
     public int Lang;
+}
+
+public class InventoryData
+{
+    public List<string> Inven_CON, Inven_MAT, Inven_VAL;
+    public List<int> Count_CON, Count_MAT, Count_VAL;
+    public int Gold;
 }
 
 [System.Serializable]
@@ -37,13 +42,12 @@ public class MyRank
     public static Texture2D Pic;
 }
 
-    public class SteamSave : MonoBehaviour
+public class SteamSave : MonoBehaviour
 {
-
     public TMP_InputField ipf;
 
-    private const string txt = "settings.json";
     private const string SETTINGS_FILE = "settings.json";
+    private const string Inventory_Path = "Inventory.json";
 
     private SteamLeaderboard_t m_SteamLeaderboard;
     private CallResult<LeaderboardFindResult_t> m_findResult;
@@ -108,17 +112,39 @@ public class MyRank
 
         Steam_Set();
 
-        // 클라우드 삭제 기능 
-        //if (SteamRemoteStorage.FileExists(txt))
-        //{
-        //    bool deleted = SteamRemoteStorage.FileDelete(txt);
-        //    Debug.Log("File Deleted: " + deleted);
-        //}
+        //클라우드 삭제 기능
+        if (SteamRemoteStorage.FileExists(SETTINGS_FILE))
+        {
+            bool deleted = SteamRemoteStorage.FileDelete(SETTINGS_FILE);
+            Debug.Log("File Deleted: " + deleted);
+        }
 
         if (!SteamRemoteStorage.FileExists(SETTINGS_FILE))
         { return "No Data"; }
         else
         { return "Data Available"; }
+    }
+
+    public void SaveInven(List<string> InvenCON, List<string> InvenMAT, List<string> InvenVAL,
+         List<int> CountCON, List<int> CountMAT, List<int> CountVAL, int G)
+    {
+        InventoryData data = new InventoryData
+        {
+            Inven_CON = InvenCON,
+            Inven_MAT = InvenMAT,
+            Inven_VAL = InvenVAL,
+
+            Count_CON = CountCON,
+            Count_MAT = CountMAT,
+            Count_VAL = CountVAL,
+
+            Gold = G,
+        };
+
+        string json = JsonUtility.ToJson(data);
+        byte[] bytes = Encoding.UTF8.GetBytes(json);
+
+        bool result = SteamRemoteStorage.FileWrite(Inventory_Path, bytes, bytes.Length);
     }
 
     public void SaveSettings(List<int> val1, List<float> val2)
@@ -192,7 +218,7 @@ public class MyRank
             Debug.LogError("Steam 초기화 안됨");
             return;
         }
-        if (timeSeconds <= 0f ) // 0미만은 허용하지 않음 (기본 검증)
+        if (timeSeconds <= 0f) // 0미만은 허용하지 않음 (기본 검증)
         {
             Debug.LogError("잘못된 점수 값");
             return;
@@ -386,9 +412,9 @@ public class MyRank
 
     void RankApply()
     {
-        for(int i = 0; i <= (RankUIs.Count-1); i++)
+        for (int i = 0; i <= (RankUIs.Count - 1); i++)
         {
-            if(RankUIs != null)
+            if (RankUIs != null)
             {
                 RankUIs[i].RankCheck();
             }
