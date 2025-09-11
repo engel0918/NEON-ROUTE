@@ -42,7 +42,6 @@ public class MenuCtrl : MonoBehaviour
 
     }
 
-
     private void OnEnable()
     {
         Exits = "";
@@ -56,7 +55,6 @@ public class MenuCtrl : MonoBehaviour
 
     void Ctrl_Menu()
     {
-
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             // 켜진 UI가 없을 때, 
@@ -118,7 +116,7 @@ public class MenuCtrl : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.inputString == "i" || Input.inputString == "I")
         {
             if (menuObj.Inven_UI.activeSelf == false)
             {

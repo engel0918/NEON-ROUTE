@@ -7,6 +7,7 @@ public class DragItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private Canvas canvas;
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
+    [SerializeField] Transform BeforeParents;
     public Transform originalParent; // 무조건 슬롯 저장
 
     void Awake()
@@ -52,6 +53,7 @@ public class DragItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     // 드롭 성공 시 슬롯에서 호출
     public void SetNewParent(Transform newParent)
     {
+        BeforeParents = originalParent;
         originalParent = newParent;
     }
 }

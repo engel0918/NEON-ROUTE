@@ -1,3 +1,5 @@
+ï»¿using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -5,46 +7,58 @@ using UnityEngine.UI;
 
 public class ItemCtrl : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    Item_Load itemMgr;
     HoverUI hover;
 
-    [Header("ÁöÁ¤ O")]
+    [Header("Fill O")]
     public Image Thum;
+    public TMP_Text txt_Count;
     public string Item_ID;
 
+    [Header ("Fill X")]
+    public Item_Load ItList;
+    public int Count;
     int It_Num;
+    public string Type;
+
     [SerializeField] Sprite Thum_spr;
 
-    private void Start()
+    private void OnEnable()
     {
-        It_Num = -1;
-
-        if (itemMgr == null)
-        { itemMgr = GameObject.FindGameObjectWithTag("ItList").GetComponent<Item_Load>(); }
-
-        ItemCheck();
+        if(Thum_spr == null)
+        { ItemCheck(Item_ID); }
     }
 
-    void ItemCheck()
+    public void ItemCheck(string str)
     {
-        if (It_Num == -1)
-        {
-            for (int i = 0; i <= (itemMgr.It_Data.Count - 1); i++)
-            {
-                if (itemMgr.It_Data[i].Id == Item_ID)
-                {
-                    It_Num = i; 
-                    break;
-                }
-            }
+        if (ItList == null)
+        { ItList = GameObject.FindGameObjectWithTag("ItList").GetComponent<Item_Load>(); }
 
-            for (int i = 0; i <= (itemMgr.thums.Count - 1); i++)
+        Item_ID = str;
+
+        for (int i = 0; i <= (ItList.thums.Count - 1); i++)
+        {
+            if (Item_ID == ItList.thums[i].Id)
             {
-                if (Item_ID == itemMgr.thums[i].Id)
-                {
-                    Thum_spr = itemMgr.thums[i].Thumnail;
-                    Thum.sprite = Thum_spr;
-                }
+                Thum_spr = ItList.thums[i].Thumnail;
+                Thum.sprite = ItList.thums[i].Thumnail;
+
+                break;
+            }
+        }
+
+        for (int i = 0; i <= (ItList.It_Data.Count - 1); i++)
+        {
+            if (ItList.It_Data[i].Id == Item_ID)
+            {
+                It_Num = i;
+
+                Type = ItList.It_Data[i].Types;
+
+                // ì¥ë¹„ì¸ ê²½ìš°, Count text ì•ˆë³´ì´ê²Œ
+                if (ItList.It_Data[i].Types == "ì¥ë¹„")
+                { txt_Count.gameObject.SetActive(false); }
+
+                break;
             }
         }
     }
@@ -56,10 +70,11 @@ public class ItemCtrl : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             if (hover == null)
             { hover = GameObject.Find("item_hover").GetComponent<HoverUI>(); }
 
-            hover.Txting(It_Num, Thum_spr);
+            if (It_Num != -1)
+            { hover.Txting(It_Num, Thum_spr); }
         }
 
-        //Debug.Log("¸¶¿ì½º°¡ ÀÌ¹ÌÁö À§¿¡ ¿Ã¶ó¿È");
+        //Debug.Log("ë§ˆìš°ìŠ¤ê°€ ì´ë¯¸ì§€ ìœ„ì— ì˜¬ë¼ì˜´");
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -69,6 +84,6 @@ public class ItemCtrl : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         hover.Contents.SetActive(false);
 
-        //Debug.Log("¸¶¿ì½º°¡ ÀÌ¹ÌÁö¿¡¼­ ¹ş¾î³²");
+        //Debug.Log("ë§ˆìš°ìŠ¤ê°€ ì´ë¯¸ì§€ì—ì„œ ë²—ì–´ë‚¨");
     }
 }
