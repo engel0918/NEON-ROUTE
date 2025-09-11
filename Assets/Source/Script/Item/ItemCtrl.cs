@@ -16,9 +16,11 @@ public class ItemCtrl : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     [Header ("Fill X")]
     public Item_Load ItList;
+    public Inven_Ctrl inven;
     public int Count;
     int It_Num;
     public string Type;
+
 
     [SerializeField] Sprite Thum_spr;
 

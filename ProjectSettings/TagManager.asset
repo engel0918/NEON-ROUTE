@@ -16,6 +16,7 @@ TagManager:
   - Steam
   - Volume
   - ItList
+  - InvenCtrl
   layers:
   - Default
   - TransparentFX

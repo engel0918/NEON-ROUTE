@@ -76,6 +76,7 @@ public class Inven_Ctrl : MonoBehaviour
             if (Val != -1)
             {
                 ItemCtrl it = Instantiate(Item, Inven_WP[Val]).GetComponent<ItemCtrl>();
+                it.inven = this;
                 it.ItList = ItList;
                 it.ItemCheck(id);
 
@@ -92,15 +93,28 @@ public class Inven_Ctrl : MonoBehaviour
         else if (type == "소비")
         {
             int Count = CountCheck(id, Data_CON);
+            int QuickCount = CountCheck(id, Data_Quick);
 
-            if(Count != -1)
+            if (Count != -1)
             {
                 // 데이터 처리 --------------------------------------------------
-                Data_WP[Count] = id;
+                Data_CON[Count] = id;
                 Count_CON[Count] += Value;
 
                 ItemCtrl itCtrl = Inven_CON[Count].GetChild(0).GetComponent<ItemCtrl>();
                 itCtrl.Count = Count_CON[Count];
+                itCtrl.txt_Count.text = itCtrl.Count.ToString();
+
+                return true;
+            }
+            else if(QuickCount != -1)
+            {
+                // 데이터 처리 --------------------------------------------------
+                Data_Quick[QuickCount] = id;
+                Count_Quick[QuickCount] += Value;
+
+                ItemCtrl itCtrl = QuickSlot[QuickCount].GetChild(0).GetComponent<ItemCtrl>();
+                itCtrl.Count = Count_Quick[QuickCount];
                 itCtrl.txt_Count.text = itCtrl.Count.ToString();
 
                 return true;
@@ -112,6 +126,7 @@ public class Inven_Ctrl : MonoBehaviour
                 if (Val != -1)
                 {
                     ItemCtrl it = Instantiate(Item, Inven_CON[Val]).GetComponent<ItemCtrl>();
+                    it.inven = this;
                     it.ItList = ItList;
                     it.ItemCheck(id);
 
@@ -160,8 +175,85 @@ public class Inven_Ctrl : MonoBehaviour
         return -1; // 못 찾으면 -1 반환
     }
 
-    void ChangeSlot()
+    public void MoveSlot(Transform org, Transform bf)
     {
+        // 이전 슬롯및 현재 슬롯의 타입을 확인
+        string bf_Type = bf.GetComponent<DropSlot>().Type;
+        string org_type = org.GetComponent<DropSlot>().Type;
 
+        // 이전의 슬롯 데이터에서 현재의 슬롯 데이터로 데이터 이동
+
+        //데이터 옮기기
+        string bf_It = "";
+        int bf_count = 0;
+
+        if (bf_Type == "Quick")
+        { 
+            bf_It = Data_Quick[CheckSlot(QuickSlot, bf)];
+            bf_count = Count_Quick[CheckSlot(QuickSlot, bf)];
+        }
+        else if (bf_Type == "장비")
+        {
+            bf_It = Data_WP[CheckSlot(Inven_WP, bf)];
+        }
+        else if (bf_Type == "소비")
+        {
+            bf_It = Data_CON[CheckSlot(Inven_CON, bf)];
+            bf_count = Count_CON[CheckSlot(Inven_CON, bf)];
+        }
+
+
+        int org_value = -1;
+
+        if (org_type == "Quick")
+        {
+            org_value = CheckSlot(QuickSlot, org);
+            ChangeData(org_value, Data_Quick, bf_It, Count_Quick, bf_count);
+        }
+        else if (org_type == "장비")
+        {
+            org_value = CheckSlot(Inven_WP, org);
+            ChangeData(org_value, Data_WP, bf_It, null, bf_count);
+        }
+        else if (org_type == "소비")
+        {
+            org_value = CheckSlot(Inven_CON, org);
+            ChangeData(org_value, Data_CON, bf_It, Count_CON, bf_count);
+        }
+
+
+        // 데이터 지우기
+        int bf_value = -1;
+        
+        if(bf_Type == "Quick") 
+        {
+            bf_value = CheckSlot(QuickSlot, bf);
+            ChangeData(bf_value, Data_Quick, "", Count_Quick, 0);
+        }
+        else if (bf_Type == "장비")
+        {
+            bf_value = CheckSlot(Inven_WP, bf);
+            ChangeData(bf_value, Data_WP, "", null, 0);
+        }
+        else if (bf_Type == "소비")
+        {
+            bf_value = CheckSlot(Inven_CON, bf);
+            ChangeData(bf_value, Data_CON, "", Count_CON, 0);
+        }
+    }
+
+    int CheckSlot(List<Transform> slots, Transform tr)
+    {
+        for(int i = 0; i <= slots.Count-1; i++)
+        { if (slots[i] == tr) { return i; } }
+
+        return -1; // 없는경우 -1을 출력
+    }
+
+    void ChangeData(int value, List<string> ItList, string It, List<int> Counts, int Count)
+    {
+        // value 번째의 ItList데이터를 It로 변경, Counts를 Count로 변경
+        ItList[value] = It;
+        if (Counts != null) { Counts[value] = Count; }
     }
 }

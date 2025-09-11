@@ -16,6 +16,7 @@ public class DropSlot : MonoBehaviour, IDropHandler
             ItemCtrl itCtrl = dragItem.GetComponent<ItemCtrl>();
 
             if (Type == "Quick") { }
+            else if (transform.childCount > 0) { return; }
             else if (itCtrl.Type != Type) { return; }
             
             if (dragItem == null) return; // DragItem이 아닌 경우 무시

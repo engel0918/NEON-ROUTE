@@ -10,6 +10,8 @@ public class DragItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     [SerializeField] Transform BeforeParents;
     public Transform originalParent; // 무조건 슬롯 저장
 
+    ItemCtrl it;
+
     void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -55,5 +57,8 @@ public class DragItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         BeforeParents = originalParent;
         originalParent = newParent;
+
+        if (it == null) { it = GetComponent<ItemCtrl>(); }
+        it.inven.MoveSlot(originalParent, BeforeParents);
     }
 }
