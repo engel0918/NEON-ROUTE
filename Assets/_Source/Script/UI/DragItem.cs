@@ -7,7 +7,7 @@ public class DragItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private Canvas canvas;
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
-    [SerializeField] Transform BeforeParents;
+    public Transform BeforeParents;
     public Transform originalParent; // 무조건 슬롯 저장
 
     ItemCtrl it;

@@ -1752,6 +1752,7 @@ GameObject:
   - component: {fileID: 3750390117435361056}
   - component: {fileID: 7294237526702622961}
   - component: {fileID: 1930070906984976125}
+  - component: {fileID: 5002067889814054933}
   m_Layer: 5
   m_Name: Slot (2)
   m_TagString: Untagged
@@ -1829,6 +1830,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropSlot
   Type: Quick
+--- !u!114 &5002067889814054933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 445235040480722455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c9c7e9b0505a8143bf6c95466e94260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &458184835500485901
 GameObject:
   m_ObjectHideFlags: 0
@@ -2108,6 +2121,7 @@ GameObject:
   - component: {fileID: 8156911923309927918}
   - component: {fileID: 5380218493798740545}
   - component: {fileID: 28843708105339644}
+  - component: {fileID: 5583361036465540478}
   m_Layer: 5
   m_Name: Slot (1)
   m_TagString: Untagged
@@ -2185,6 +2199,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropSlot
   Type: Quick
+--- !u!114 &5583361036465540478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540778300206891396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c9c7e9b0505a8143bf6c95466e94260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &556724438284249781
 GameObject:
   m_ObjectHideFlags: 0
@@ -2197,6 +2223,7 @@ GameObject:
   - component: {fileID: 5272323492060362330}
   - component: {fileID: 9080470079706074282}
   - component: {fileID: 5168321898847250793}
+  - component: {fileID: 5379043389545917367}
   m_Layer: 5
   m_Name: Slot (4)
   m_TagString: Untagged
@@ -2274,6 +2301,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropSlot
   Type: Quick
+--- !u!114 &5379043389545917367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 556724438284249781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c9c7e9b0505a8143bf6c95466e94260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &558122697545996778
 GameObject:
   m_ObjectHideFlags: 0
@@ -3710,6 +3749,7 @@ GameObject:
   - component: {fileID: 1876596491199441210}
   - component: {fileID: 6646358940210557327}
   - component: {fileID: 4764927712724102085}
+  - component: {fileID: 4041588546206943374}
   m_Layer: 5
   m_Name: Slot (5)
   m_TagString: Untagged
@@ -3787,6 +3827,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropSlot
   Type: Quick
+--- !u!114 &4041588546206943374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939839545640493761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c9c7e9b0505a8143bf6c95466e94260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &956011245958197498
 GameObject:
   m_ObjectHideFlags: 0
@@ -9150,6 +9202,7 @@ GameObject:
   - component: {fileID: 1111377194904407246}
   - component: {fileID: 3215084437271512609}
   - component: {fileID: 200961568522571984}
+  - component: {fileID: 5745149634738592083}
   m_Layer: 5
   m_Name: Slot (3)
   m_TagString: Untagged
@@ -9227,6 +9280,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropSlot
   Type: Quick
+--- !u!114 &5745149634738592083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2673189419171168079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c9c7e9b0505a8143bf6c95466e94260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2673538401241612397
 GameObject:
   m_ObjectHideFlags: 0
@@ -11169,8 +11234,8 @@ RectTransform:
   - {fileID: 355197880146698390}
   - {fileID: 1651450393694179534}
   - {fileID: 3066512315538377957}
-  - {fileID: 8477092365931416741}
   - {fileID: 363377472182565983}
+  - {fileID: 8477092365931416741}
   - {fileID: 5314619678823496865}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16571,9 +16636,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 500, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 500, y: 500}
-  m_Pivot: {x: 0.9, y: 0.9}
+  m_Pivot: {x: 0.1, y: 0.1}
 --- !u!114 &5658471994068715122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20705,6 +20770,7 @@ GameObject:
   - component: {fileID: 7112826522617505190}
   - component: {fileID: 6094573558693419330}
   - component: {fileID: 4296799324799579199}
+  - component: {fileID: 1086112344863299152}
   m_Layer: 5
   m_Name: Slot
   m_TagString: Untagged
@@ -20782,6 +20848,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropSlot
   Type: Quick
+--- !u!114 &1086112344863299152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5496889468367573747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c9c7e9b0505a8143bf6c95466e94260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5506882421632663484
 GameObject:
   m_ObjectHideFlags: 0
@@ -21912,7 +21990,7 @@ GameObject:
   m_Component:
   - component: {fileID: 553230378109778203}
   m_Layer: 5
-  m_Name: 'Slot: Equip'
+  m_Name: 'Slot: Quick'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

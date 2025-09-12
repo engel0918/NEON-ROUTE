@@ -256,4 +256,70 @@ public class Inven_Ctrl : MonoBehaviour
         ItList[value] = It;
         if (Counts != null) { Counts[value] = Count; }
     }
+
+    // 몇번째 퀵? / 아이템
+    public void Quick_to_Mov(int val, ItemCtrl item)
+    {
+        if (item.Type == "장비")
+        {
+            int Val = EmptySlot(Data_WP);
+
+            if (Val != -1)
+            { 
+                // 이동
+                item.transform.SetParent(Inven_WP[Val]);
+                item.transform.localPosition = new Vector3(0, 0, 0);
+
+                // 드래그 조정
+                DragItem drag = item.GetComponent<DragItem>();
+                drag.BeforeParents = drag.originalParent;
+                drag.originalParent = Inven_WP[Val];
+
+                // 데이터 처리 --------------------------------------------------
+
+                // 새로운 정보
+                Data_WP[Val] = Data_Quick[val];
+                //Count_WP[val] = Count_Quick[val];
+
+                //퀵 데이터 이동
+                Data_Quick[val] = "";
+                Count_Quick[val] = 0;
+            }
+            else
+            {
+                Debug.Log("장비 아이템 슬롯이 가득찼습니다.");
+            }
+        }
+        else if (item.Type == "소비")
+        {
+            int Val = EmptySlot(Data_CON);
+
+            if (Val != -1)
+            {
+                // 이동
+                item.transform.SetParent(Inven_CON[Val]);
+                item.transform.localPosition = new Vector3(0, 0, 0);
+
+                // 드래그 조정
+                DragItem drag = item.GetComponent<DragItem>();
+                drag.BeforeParents = drag.originalParent;
+                drag.originalParent = Inven_CON[Val];
+
+                // 데이터 처리 --------------------------------------------------
+
+                // 새로운 정보
+                Data_CON[Val] = Data_Quick[val];
+                Count_CON[Val] = Count_Quick[val];
+
+                //퀵 데이터 이동
+                Data_Quick[val] = "";
+                Count_Quick[val] = 0;
+            }
+            else
+            {
+                Debug.Log("장비 아이템 슬롯이 가득찼습니다.");
+            }
+        }
+
+    }
 }

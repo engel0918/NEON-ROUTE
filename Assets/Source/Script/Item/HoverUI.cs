@@ -128,6 +128,6 @@ public class HoverUI : MonoBehaviour
 
         // targetSibling의 인덱스를 가져와 +1로 설정
         int targetIndex = Inventory.GetSiblingIndex();
-        panel.SetSiblingIndex(targetIndex + 1);
+        //panel.SetSiblingIndex(targetIndex + 1);
     }
 }
