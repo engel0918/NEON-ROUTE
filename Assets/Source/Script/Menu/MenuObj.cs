@@ -309,7 +309,11 @@ public class MenuObj : MonoBehaviour
         Steam.SaveSettings(ints, floats);
         Apply();
 
+
+        //-----------------------------------------------------
+
         //인벤토리 빈값 지정
+        List<string> Inven_Wp = new List<string>();
         List<string> Inven_Con = new List<string>();
         List<string> Inven_Val = new List<string>();
         List<string> Inven_MAT = new List<string>();
@@ -322,11 +326,13 @@ public class MenuObj : MonoBehaviour
 
         for (int i = 0; i <= 23; i++)
         {
-            Inven_Con.Add("null"); Inven_Val.Add("null"); Inven_MAT.Add("null");
+            Inven_Wp.Add("null"); Inven_Con.Add("null"); Inven_Val.Add("null"); Inven_MAT.Add("null");
             Count_Con.Add(0); Count_Val.Add(0); Count_MAT.Add(0);
         }
 
-        Steam.SaveInven(Inven_Con, Inven_MAT, Inven_Val, Count_Con, Count_MAT, Count_Val, G);
+        //-----------------------------------------------------
+
+        Steam.SaveInven(Inven_Wp, Inven_Con, Inven_MAT, Inven_Val, Count_Con, Count_MAT, Count_Val, G);
 
         //-----------------------------------------------------
     }
@@ -524,7 +530,6 @@ public class MenuObj : MonoBehaviour
                     return AntiAliasingMode.None;
         }
     }
-
 
     public IEnumerator LoadSceneAsync(string sceneName)
     {

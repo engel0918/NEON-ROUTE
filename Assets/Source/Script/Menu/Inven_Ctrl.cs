@@ -34,12 +34,16 @@ public class Inven_Ctrl : MonoBehaviour
 
     private void Awake()
     {
+        StartSet();
+    }
+
+    void StartSet()
+    {
         DataSet(QuickSlot, Data_Quick, Count_Quick);
         DataSet(Inven_WP, Data_WP, null);
         DataSet(Inven_CON, Data_CON, Count_CON);
         DataSet(Inven_MAT, Data_MAT, Count_MAT);
         DataSet(Inven_VAL, Data_VAL, Count_VAL);
-
     }
 
     void DataSet(List<Transform> trList, List<string> StrList, List<int> CountList)

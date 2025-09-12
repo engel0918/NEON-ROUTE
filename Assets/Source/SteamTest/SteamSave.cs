@@ -17,9 +17,9 @@ public class SettingsData
     public int Lang;
 }
 
-public class InventoryData
+public class Inven_Data
 {
-    public List<string> Inven_CON, Inven_MAT, Inven_VAL;
+    public List<string> Inven_WP, Inven_CON, Inven_MAT, Inven_VAL;
     public List<int> Count_CON, Count_MAT, Count_VAL;
     public int Gold;
 }
@@ -125,11 +125,12 @@ public class SteamSave : MonoBehaviour
         { return "Data Available"; }
     }
 
-    public void SaveInven(List<string> InvenCON, List<string> InvenMAT, List<string> InvenVAL,
+    public void SaveInven(List<string> InvenWP, List<string> InvenCON, List<string> InvenMAT, List<string> InvenVAL,
          List<int> CountCON, List<int> CountMAT, List<int> CountVAL, int G)
     {
-        InventoryData data = new InventoryData
+        Inven_Data data = new Inven_Data
         {
+            Inven_WP = InvenWP,
             Inven_CON = InvenCON,
             Inven_MAT = InvenMAT,
             Inven_VAL = InvenVAL,
@@ -151,11 +152,12 @@ public class SteamSave : MonoBehaviour
     {
         SettingsData data = new SettingsData
         {
-            SS = val2[0],
             GQ = val1[0],
             AA = val1[1],
             GM = val1[2],
             RES = val1[3],
+
+            SS = val2[0],
             Mv = val2[1],
             BGMv = val2[2],
             SFXv = val2[3],
