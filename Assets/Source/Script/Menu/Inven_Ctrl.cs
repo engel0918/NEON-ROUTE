@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class Inven_Ctrl : MonoBehaviour
 {
-    public TMP_Text id;
-    public TMP_Text type;
-    public TMP_Text value;
+    public TMP_InputField id;
+    public TMP_InputField type;
+    public TMP_InputField value;
 
     [Header("NoneItem Prefab")]
     [SerializeField] GameObject Item;

@@ -130,6 +130,8 @@ public class SteamSave : MonoBehaviour
     public static SteamSave Instance { get; private set; }
     private Data_Cha loadedData; // 로드된 데이터 저장용
 
+
+
     private void Awake()
     {
         if (Instance == null)
