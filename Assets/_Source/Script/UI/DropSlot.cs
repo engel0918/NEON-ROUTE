@@ -8,25 +8,24 @@ public class DropSlot : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
+        if (eventData.pointerDrag == null) return;
 
-        if (eventData.pointerDrag != null)
+        DragItem dragItem = eventData.pointerDrag.GetComponent<DragItem>();
+        if (dragItem == null) return; // DragItem이 없는 경우 무시
+
+        ItemCtrl itCtrl = dragItem.GetComponent<ItemCtrl>();
+        if (itCtrl == null) return; // ItemCtrl 없는 경우 무시
+
+        if (Type != "Quick" && itCtrl.Type != Type) return; // 타입 검사
+
+        // 슬롯이 비어있으면 아이템 옮기기
+        if (transform.childCount <= 0)
         {
-
-            DragItem dragItem = eventData.pointerDrag.GetComponent<DragItem>();
-            ItemCtrl itCtrl = dragItem.GetComponent<ItemCtrl>();
-
-            if (Type == "Quick") { }
-            else if (transform.childCount > 0) { return; }
-            else if (itCtrl.Type != Type) { return; }
-            
-            if (dragItem == null) return; // DragItem이 아닌 경우 무시
-
-            // 슬롯으로 아이템 옮기기
             eventData.pointerDrag.transform.SetParent(transform);
             eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-
-            // 원래 슬롯 갱신
-            dragItem.SetNewParent(transform);
         }
+
+        // 원래 슬롯 갱신
+        dragItem.SetNewParent(transform);
     }
 }

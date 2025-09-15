@@ -11,6 +11,7 @@ public class DragItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public Transform originalParent; // 무조건 슬롯 저장
 
     ItemCtrl it;
+    Inven_Ctrl inven;
 
     void Awake()
     {
@@ -55,10 +56,18 @@ public class DragItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     // 드롭 성공 시 슬롯에서 호출
     public void SetNewParent(Transform newParent)
     {
-        BeforeParents = originalParent;
-        originalParent = newParent;
+        if (newParent.childCount > 0)
+        {
+            if(inven == null) { inven = GameObject.FindGameObjectWithTag("InvenCtrl").GetComponent<Inven_Ctrl>(); }
+            inven.Exchange(newParent, originalParent, transform);
+        }
+        else
+        {
+            BeforeParents = originalParent;
+            originalParent = newParent;
 
-        if (it == null) { it = GetComponent<ItemCtrl>(); }
-        it.inven.MoveSlot(originalParent, BeforeParents);
+            if (it == null) { it = GetComponent<ItemCtrl>(); }
+            it.inven.MoveSlot(originalParent, BeforeParents);
+        }
     }
 }

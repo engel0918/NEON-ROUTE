@@ -179,6 +179,106 @@ public class Inven_Ctrl : MonoBehaviour
         return -1; // 못 찾으면 -1 반환
     }
 
+    public void Exchange(Transform org, Transform bf, Transform tr)
+    {
+        // 이전 슬롯및 현재 슬롯의 타입을 확인
+        string bf_Type = bf.GetComponent<DropSlot>().Type;
+        string org_type = org.GetComponent<DropSlot>().Type;
+
+        // 이전의 슬롯 데이터에서 현재의 슬롯 데이터로 데이터 이동
+
+        //데이터 옮기기
+        string bf_It = "";
+        int bf_count = 0;
+
+        string org_It = "";
+        int org_count = 0;
+
+        if (bf_Type == "Quick")
+        {
+            bf_It = Data_Quick[CheckSlot(QuickSlot, bf)];
+            bf_count = Count_Quick[CheckSlot(QuickSlot, bf)];
+        }
+        else if (bf_Type == "장비")
+        {
+            bf_It = Data_WP[CheckSlot(Inven_WP, bf)];
+        }
+        else if (bf_Type == "소비")
+        {
+            bf_It = Data_CON[CheckSlot(Inven_CON, bf)];
+            bf_count = Count_CON[CheckSlot(Inven_CON, bf)];
+        }
+
+
+        if (org_type == "Quick")
+        {
+            org_It = Data_Quick[CheckSlot(QuickSlot, org)];
+            org_count = Count_Quick[CheckSlot(QuickSlot, org)];
+        }
+        else if (org_type == "장비")
+        {
+            org_It = Data_WP[CheckSlot(Inven_WP, org)];
+        }
+        else if (org_type == "소비")
+        {
+            org_It = Data_CON[CheckSlot(Inven_CON, org)];
+            org_count = Count_CON[CheckSlot(Inven_CON, org)];
+        }
+
+        //-----------------------------------------------------
+
+        int bf_value = -1;
+
+        if (bf_Type == "Quick")
+        {
+            bf_value = CheckSlot(QuickSlot, bf);
+            ChangeData(bf_value, Data_Quick, org_It, Count_Quick, org_count);
+        }
+        else if (bf_Type == "장비")
+        {
+            bf_value = CheckSlot(Inven_WP, bf);
+            ChangeData(bf_value, Data_WP, org_It, null, org_count);
+        }
+        else if (bf_Type == "소비")
+        {
+            bf_value = CheckSlot(Inven_CON, bf);
+            ChangeData(bf_value, Data_CON, org_It, Count_CON, org_count);
+        }
+
+
+        int org_value = -1;
+
+        if (org_type == "Quick")
+        {
+            org_value = CheckSlot(QuickSlot, org);
+            ChangeData(org_value, Data_Quick, bf_It, Count_Quick, bf_count);
+        }
+        else if (org_type == "장비")
+        {
+            org_value = CheckSlot(Inven_WP, org);
+            ChangeData(org_value, Data_WP, bf_It, null, bf_count);
+        }
+        else if (org_type == "소비")
+        {
+            org_value = CheckSlot(Inven_CON, org);
+            ChangeData(org_value, Data_CON, bf_It, Count_CON, bf_count);
+        }
+
+        // 디자인 ------------------------------------
+
+        Transform org_drag = org.childCount > 0 ? org.GetChild(0) : null;
+        
+        org_drag.transform.SetParent(bf);
+        org_drag.transform.localPosition = Vector3.zero;
+        org_drag.GetComponent<DragItem>().BeforeParents = org;
+        org_drag.GetComponent<DragItem>().originalParent = bf;
+
+        tr.transform.SetParent(org);
+        tr.transform.localPosition = Vector3.zero;
+        tr.GetComponent<DragItem>().BeforeParents = bf;
+        tr.GetComponent<DragItem>().originalParent = org;
+    }
+
     public void MoveSlot(Transform org, Transform bf)
     {
         // 이전 슬롯및 현재 슬롯의 타입을 확인
