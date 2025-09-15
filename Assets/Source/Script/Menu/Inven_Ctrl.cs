@@ -451,6 +451,9 @@ public class Inven_Ctrl : MonoBehaviour
                 it.inven = this;
                 it.ItList = ItList;
                 it.ItemCheck(Data.Inven_Quick[i]);
+
+                it.Count = Count_Quick[i];
+                it.txt_Count.text = it.Count.ToString();
             }
         }
 
@@ -478,6 +481,9 @@ public class Inven_Ctrl : MonoBehaviour
                 it.inven = this;
                 it.ItList = ItList;
                 it.ItemCheck(Data.Inven_CON[i]);
+
+                it.Count = Count_CON[i];
+                it.txt_Count.text = it.Count.ToString();
             } 
         }
 
@@ -492,6 +498,9 @@ public class Inven_Ctrl : MonoBehaviour
                 it.inven = this;
                 it.ItList = ItList;
                 it.ItemCheck(Data.Inven_MAT[i]);
+
+                it.Count = Count_MAT[i];
+                it.txt_Count.text = it.Count.ToString();
             }
         }
 
@@ -506,6 +515,9 @@ public class Inven_Ctrl : MonoBehaviour
                 it.inven = this;
                 it.ItList = ItList;
                 it.ItemCheck(Data.Inven_VAL[i]);
+
+                it.Count = Count_VAL[i];
+                it.txt_Count.text = it.Count.ToString();
             }
         }
     }
