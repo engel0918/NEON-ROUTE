@@ -15,7 +15,6 @@ using UnityEngine.UI;
 public class MenuObj : MonoBehaviour
 {
     private const string SETTINGS_FILE = "settings.json";
-    private const string Inventory_Path = "Inventory.json";
     SteamSave Steam;
 
     public GameObject MainUI, SetUI, ExitUI, Inven_UI;
@@ -313,26 +312,81 @@ public class MenuObj : MonoBehaviour
         //-----------------------------------------------------
 
         //인벤토리 빈값 지정
+        List<string> Inven_Quick = new List<string>();
         List<string> Inven_Wp = new List<string>();
         List<string> Inven_Con = new List<string>();
         List<string> Inven_Val = new List<string>();
         List<string> Inven_MAT = new List<string>();
 
+        List<int> Count_Quick = new List<int>();
         List<int> Count_Con = new List<int>();
         List<int> Count_Val = new List<int>();
         List<int> Count_MAT = new List<int>();
 
         int G = 0;
 
+        List<string> EquipPT = new List<string>();
+
+        List<string> Head_Col = new List<string>();
+        List<string> Core_Col = new List<string>();
+        List<string> Body_Col = new List<string>();
+        List<string> Arms_Col = new List<string>();
+        List<string> Legs_Col = new List<string>();
+
+        for (int i = 0; i <= 5; i++)
+        {
+            Inven_Quick.Add("");
+            Count_Quick.Add(0);
+        }
+
+        // 인벤토리
         for (int i = 0; i <= 23; i++)
         {
-            Inven_Wp.Add("null"); Inven_Con.Add("null"); Inven_Val.Add("null"); Inven_MAT.Add("null");
+            Inven_Wp.Add(""); Inven_Con.Add(""); Inven_Val.Add(""); Inven_MAT.Add("");
             Count_Con.Add(0); Count_Val.Add(0); Count_MAT.Add(0);
         }
 
-        //-----------------------------------------------------
+        // 장착된 장비
+        for (int i = 0; i <= 6; i++)
+        {
+            EquipPT.Add("null");
+        }
 
-        Steam.SaveInven(Inven_Wp, Inven_Con, Inven_MAT, Inven_Val, Count_Con, Count_MAT, Count_Val, G);
+        // 지정된 컬러
+        for (int i = 0; i <= 2; i++)
+        {
+            Head_Col.Add(""); Core_Col.Add(""); Body_Col.Add("");
+            Arms_Col.Add(""); Legs_Col.Add("");
+
+            if (i == 0)
+            {
+                string col = "#ff0000";
+
+                Head_Col[i] = col; Core_Col[i] = col; Body_Col[i] = col;
+                Arms_Col[i] = col; Legs_Col[i] = col;
+            }
+            if (i == 1) 
+            {
+                string col = "#ff9100";
+
+                Head_Col[i] = col; Core_Col[i] = col; Body_Col[i] = col;
+                Arms_Col[i] = col; Legs_Col[i] = col;
+            }
+            if (i == 2) 
+            {
+                string col = "#ffea00";
+
+                Head_Col[i] = col; Core_Col[i] = col; Body_Col[i] = col;
+                Arms_Col[i] = col; Legs_Col[i] = col;
+            }
+        }
+
+        //-----------------------------------------------------
+        // 캐릭터 세이브
+
+        Steam.Save_Cha(Inven_Quick, Inven_Wp, Inven_Con, Inven_MAT, Inven_Val, 
+            Count_Quick, Count_Con, Count_MAT, Count_Val,
+            G, EquipPT, Head_Col, Core_Col, Body_Col, Arms_Col, Legs_Col);
 
         //-----------------------------------------------------
     }

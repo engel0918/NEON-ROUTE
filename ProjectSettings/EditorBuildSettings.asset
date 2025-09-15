@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Source/Scene/Stage 0.0.2.unity
     guid: 3dd8a80f6c08e4d4aac284d7da892e93
+  - enabled: 1
+    path: Assets/_Source/Scene/MainUI _Simulate.unity
+    guid: 0420e2a86797de748b8eb763106a3cbd
   - enabled: 0
     path: Assets/Source/Scene/Ctrltest.unity
     guid: 7dd2220f7fa8f074eb0d1b3a4db38249

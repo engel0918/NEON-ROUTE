@@ -23,6 +23,7 @@ public class Lobby : MonoBehaviour
     private void Awake()
     {
         steam = new GameObject("SteamMgr").AddComponent<SteamManager>().AddComponent<SteamSave>();
+        steam.Load_Cha();
         steam.tag = "Steam";
     }
 

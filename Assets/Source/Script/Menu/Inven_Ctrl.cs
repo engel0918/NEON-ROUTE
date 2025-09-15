@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -21,20 +22,23 @@ public class Inven_Ctrl : MonoBehaviour
     public Item_Load ItList;
 
     [Header("Fill X")]
-    public List<string> Data_Quick;
-    public List<string> Data_WP;
-    public List<string> Data_CON;
-    public List<string> Data_MAT;
-    public List<string> Data_VAL;
+    public List<string> Data_Quick, Data_WP, Data_CON, Data_MAT, Data_VAL;
+    public List<int> Count_Quick, Count_CON, Count_MAT, Count_VAL;
 
-    public List<int> Count_Quick;
-    public List<int> Count_CON;
-    public List<int> Count_MAT;
-    public List<int> Count_VAL;
+    public int G;
+
+    public List<string> Data_Equip;
+    public List<string> Head_Col, Core_Col, Body_Col, Arms_Col, Legs_Col;
+
+    SteamSave steam;
 
     private void Awake()
     {
         StartSet();
+
+        //if (steam != null)
+        //{ GameObject.FindGameObjectWithTag("SteamMgr").GetComponent<SteamSave>(); }
+        //steam.Load_Cha();
     }
 
     void StartSet()
@@ -44,6 +48,8 @@ public class Inven_Ctrl : MonoBehaviour
         DataSet(Inven_CON, Data_CON, Count_CON);
         DataSet(Inven_MAT, Data_MAT, Count_MAT);
         DataSet(Inven_VAL, Data_VAL, Count_VAL);
+
+        
     }
 
     void DataSet(List<Transform> trList, List<string> StrList, List<int> CountList)
@@ -60,6 +66,8 @@ public class Inven_Ctrl : MonoBehaviour
     {
         if (ItList == null)
         { ItList = GameObject.FindGameObjectWithTag("ItList").GetComponent<Item_Load>(); }
+
+        Load_Cha();
     }
 
     public void getIt_test()
@@ -425,5 +433,94 @@ public class Inven_Ctrl : MonoBehaviour
             }
         }
 
+    }
+
+    void Load_Cha()
+    {
+
+        Data_Cha Data = SteamSave.Instance.GetLoadedData();
+
+        for (int i = 0; i <= (Data_Quick.Count - 1); i++)
+        {
+            if (Data.Inven_Quick[i] != "")
+            {
+                Data_Quick[i] = Data.Inven_Quick[i];
+                Count_Quick[i] = Data.Count_Quick[i];
+
+                ItemCtrl it = Instantiate(Item, QuickSlot[i]).GetComponent<ItemCtrl>();
+                it.inven = this;
+                it.ItList = ItList;
+                it.ItemCheck(Data.Inven_Quick[i]);
+            }
+        }
+
+        for (int i = 0; i <= (Data_WP.Count - 1); i++)
+        {
+            if (Data.Inven_WP[i] != "") 
+            {
+                Data_WP[i] = Data.Inven_WP[i];
+
+                ItemCtrl it = Instantiate(Item, Inven_WP[i]).GetComponent<ItemCtrl>();
+                it.inven = this;
+                it.ItList = ItList;
+                it.ItemCheck(Data.Inven_WP[i]);
+            } 
+        }
+
+        for (int i = 0; i <= (Data_CON.Count - 1); i++)
+        {
+            if (Data.Inven_CON[i] != "")
+            {
+                Data_CON[i] = Data.Inven_CON[i];
+                Count_CON[i] = Data.Count_CON[i];
+
+                ItemCtrl it = Instantiate(Item, Inven_CON[i]).GetComponent<ItemCtrl>();
+                it.inven = this;
+                it.ItList = ItList;
+                it.ItemCheck(Data.Inven_CON[i]);
+            } 
+        }
+
+        for (int i = 0; i <= (Data_MAT.Count - 1); i++)
+        {
+            if (Data.Inven_MAT[i] != "")
+            {
+                Data_MAT[i] = Data.Inven_MAT[i];
+                Count_MAT[i] = Data.Count_MAT[i];
+
+                ItemCtrl it = Instantiate(Item, Inven_MAT[i]).GetComponent<ItemCtrl>();
+                it.inven = this;
+                it.ItList = ItList;
+                it.ItemCheck(Data.Inven_MAT[i]);
+            }
+        }
+
+        for (int i = 0; i <= (Data_VAL.Count - 1); i++)
+        {
+            if (Data.Inven_VAL[i] != "")
+            {
+                Data_VAL[i] = Data.Inven_VAL[i];
+                Count_VAL[i] = Data.Count_VAL[i];
+
+                ItemCtrl it = Instantiate(Item, Inven_VAL[i]).GetComponent<ItemCtrl>();
+                it.inven = this;
+                it.ItList = ItList;
+                it.ItemCheck(Data.Inven_VAL[i]);
+            }
+        }
+    }
+
+    public void Save_Cha()
+    {
+        steam = new GameObject("SteamMgr").AddComponent<SteamManager>().AddComponent<SteamSave>();
+
+        steam.Save_Cha(Data_Quick, Data_WP, Data_CON, Data_MAT, Data_VAL
+            , Count_Quick, Count_CON, Count_MAT, Count_VAL, G, Data_Equip, 
+            Head_Col, Core_Col, Body_Col, Arms_Col, Legs_Col);
+    }
+
+    string SearchItem(string id)
+    {
+        return ItList.It_Data.FirstOrDefault(x => x.Id == id)?.Types ?? "";
     }
 }

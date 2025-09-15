@@ -17,11 +17,77 @@ public class SettingsData
     public int Lang;
 }
 
-public class Inven_Data
+public class Data_Cha
 {
-    public List<string> Inven_WP, Inven_CON, Inven_MAT, Inven_VAL;
-    public List<int> Count_CON, Count_MAT, Count_VAL;
+    // 인벤토리
+    public List<string> Inven_Quick, Inven_WP, Inven_CON, Inven_MAT, Inven_VAL;
+    public List<int> Count_Quick, Count_CON, Count_MAT, Count_VAL;
     public int Gold;
+
+    // 장착된 장비
+    public List<string> EquipPT;
+
+    // 지정된 컬러
+    public List<string> HeadCol, Core_Col, Body_Col, Arms_Col, Legs_Col;
+}
+
+public static class KeyManager
+{
+    /// <summary>
+    /// Steam ID 기반으로 Key / IV 생성
+    /// </summary>
+    public static void GetKeyAndIV(out byte[] key, out byte[] iv)
+    {
+        ulong steamId = SteamUser.GetSteamID().m_SteamID;
+        string baseStr = steamId.ToString();
+
+        using (SHA256 sha = SHA256.Create())
+        {
+            byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(baseStr));
+            key = new byte[32];
+            iv = new byte[16];
+
+            Array.Copy(hash, 0, key, 0, 32);
+            Array.Copy(hash, 0, iv, 0, 16);
+        }
+    }
+}
+
+public static class CryptoUtil
+{
+    public static byte[] Encrypt(string plainText)
+    {
+        KeyManager.GetKeyAndIV(out byte[] key, out byte[] iv);
+
+        using (Aes aes = Aes.Create())
+        {
+            aes.Key = key;
+            aes.IV = iv;
+            aes.Mode = CipherMode.CBC;
+            aes.Padding = PaddingMode.PKCS7;
+
+            ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+            byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
+            return encryptor.TransformFinalBlock(plainBytes, 0, plainBytes.Length);
+        }
+    }
+
+    public static string Decrypt(byte[] cipherBytes)
+    {
+        KeyManager.GetKeyAndIV(out byte[] key, out byte[] iv);
+
+        using (Aes aes = Aes.Create())
+        {
+            aes.Key = key;
+            aes.IV = iv;
+            aes.Mode = CipherMode.CBC;
+            aes.Padding = PaddingMode.PKCS7;
+
+            ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+            byte[] decryptedBytes = decryptor.TransformFinalBlock(cipherBytes, 0, cipherBytes.Length);
+            return Encoding.UTF8.GetString(decryptedBytes);
+        }
+    }
 }
 
 [System.Serializable]
@@ -44,10 +110,11 @@ public class MyRank
 
 public class SteamSave : MonoBehaviour
 {
+
     public TMP_InputField ipf;
 
     private const string SETTINGS_FILE = "settings.json";
-    private const string Inventory_Path = "Inventory.json";
+    private const string Cha_Path = "Character.json";
 
     private SteamLeaderboard_t m_SteamLeaderboard;
     private CallResult<LeaderboardFindResult_t> m_findResult;
@@ -59,6 +126,17 @@ public class SteamSave : MonoBehaviour
     private float pendingScore = -1f;
 
     public List<RankUI> RankUIs;
+
+    public static SteamSave Instance { get; private set; }
+    private Data_Cha loadedData; // 로드된 데이터 저장용
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
 
     void Start()
     {
@@ -112,12 +190,20 @@ public class SteamSave : MonoBehaviour
 
         Steam_Set();
 
-        //클라우드 삭제 기능
-        if (SteamRemoteStorage.FileExists(SETTINGS_FILE))
-        {
-            bool deleted = SteamRemoteStorage.FileDelete(SETTINGS_FILE);
-            Debug.Log("File Deleted: " + deleted);
-        }
+        ////클라우드 삭제 기능
+        //if (SteamRemoteStorage.FileExists(SETTINGS_FILE))
+        //{
+        //    bool deleted = SteamRemoteStorage.FileDelete(SETTINGS_FILE);
+        //    Debug.Log("File Deleted: " + SETTINGS_FILE + deleted);
+        //}
+
+        //if (SteamRemoteStorage.FileExists(Cha_Path))
+        //{
+        //    bool deleted = SteamRemoteStorage.FileDelete(Cha_Path);
+        //    Debug.Log("File Deleted: " + Cha_Path + deleted);
+        //}
+
+
 
         if (!SteamRemoteStorage.FileExists(SETTINGS_FILE))
         { return "No Data"; }
@@ -125,27 +211,70 @@ public class SteamSave : MonoBehaviour
         { return "Data Available"; }
     }
 
-    public void SaveInven(List<string> InvenWP, List<string> InvenCON, List<string> InvenMAT, List<string> InvenVAL,
-         List<int> CountCON, List<int> CountMAT, List<int> CountVAL, int G)
+    // 암호화 - 캐릭터 세이브
+    public void Save_Cha(List<string> InvenQuick, List<string> InvenWP, List<string> InvenCON, List<string> InvenMAT, List<string> InvenVAL,
+          List<int> CountQuick, List<int> CountCON, List<int> CountMAT, List<int> CountVAL, int G, List<string> EquipPT,
+         List<string> Head_Col, List<string> Core_Col, List<string> Body_Col, List<string> Arms_Col, List<string> Legs_Col)
     {
-        Inven_Data data = new Inven_Data
+        Data_Cha data = new Data_Cha
         {
+            Inven_Quick = InvenQuick,
             Inven_WP = InvenWP,
             Inven_CON = InvenCON,
             Inven_MAT = InvenMAT,
             Inven_VAL = InvenVAL,
 
+            Count_Quick = CountQuick,
             Count_CON = CountCON,
             Count_MAT = CountMAT,
             Count_VAL = CountVAL,
 
             Gold = G,
+
+            EquipPT = EquipPT,
+
+           HeadCol = Head_Col,
+           Core_Col = Core_Col,
+           Body_Col = Body_Col, 
+           Arms_Col = Arms_Col, 
+           Legs_Col = Legs_Col
         };
 
         string json = JsonUtility.ToJson(data);
-        byte[] bytes = Encoding.UTF8.GetBytes(json);
+        byte[] encrypted = CryptoUtil.Encrypt(json);
 
-        bool result = SteamRemoteStorage.FileWrite(Inventory_Path, bytes, bytes.Length);
+        bool result = SteamRemoteStorage.FileWrite(Cha_Path, encrypted, encrypted.Length);
+    }
+
+    public Data_Cha Load_Cha()
+    {
+        if (!SteamRemoteStorage.FileExists("Character.json"))
+        {
+            Debug.LogWarning("Inventory file not found.");
+            return null;
+        }
+
+        int size = SteamRemoteStorage.GetFileSize("Character.json");
+        byte[] buffer = new byte[size];
+        SteamRemoteStorage.FileRead("Character.json", buffer, size);
+
+        try
+        {
+            string decrypted = CryptoUtil.Decrypt(buffer);
+            loadedData = JsonUtility.FromJson<Data_Cha>(decrypted);
+            Debug.Log("Inventory Loaded (Decrypted).");
+            return loadedData;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Failed to decrypt Inventory: " + ex.Message);
+            return null;
+        }
+    }
+
+    public Data_Cha GetLoadedData()
+    {
+        return loadedData;
     }
 
     public void SaveSettings(List<int> val1, List<float> val2)
