@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.rlabrecque.steamworks.net": "file:C:/Unity/_Pkg/Steamworks.NET-master/com.rlabrecque.steamworks.net",
+    "com.rlabrecque.steamworks.net": "file:C:/Yun JinYeol/Unity/_pkg/Steamworks.NET-master/com.rlabrecque.steamworks.net",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ai.navigation": "2.0.8",
     "com.unity.burst": "1.8.23",

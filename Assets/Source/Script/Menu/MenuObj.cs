@@ -15,6 +15,7 @@ using UnityEngine.UI;
 public class MenuObj : MonoBehaviour
 {
     private const string SETTINGS_FILE = "settings.json";
+    private const string Cha_Path = "Character.json";
     SteamSave Steam;
 
     public GameObject MainUI, SetUI, ExitUI, Inven_UI;
@@ -116,7 +117,6 @@ public class MenuObj : MonoBehaviour
         // 현재 상태 체크
         int AAlv = data.AA;
         Aa_Set(AAlv);
-       
     }
 
     // Intro에서 켜는 설정메뉴

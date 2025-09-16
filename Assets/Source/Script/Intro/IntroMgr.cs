@@ -1,10 +1,5 @@
-using Steamworks;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+ï»¿using System.Collections;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -13,6 +8,7 @@ public class Intro : MonoBehaviour
     MenuObj menuObj;
     SteamSave SteamMgr;
     PageCtrl pagectrl;
+
 
     private void Start()
     {
@@ -29,12 +25,12 @@ public class Intro : MonoBehaviour
 
     void SetData_Check()
     {
-       Debug.Log(SteamMgr.SetDat_Check());
+        string result = SteamMgr.SetDat_Check();
+        Debug.Log(result);
 
-        if (SteamMgr.SetDat_Check() == "No Data")
+        if (result == "No Data")
         { No_Data(); }
-        else if (SteamMgr.SetDat_Check() == "Data Available")
-        { Data_Available(); }
+        else{ Data_Available(); }
     }
 
     void No_Data()
@@ -71,11 +67,11 @@ public class Intro : MonoBehaviour
 
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
 
-        // ¾À ·ÎµùÀÌ ³¡³¯ ¶§±îÁö ´ë±â
+        // ì”¬ ë¡œë”©ì´ ëë‚  ë•Œê¹Œì§€ ëŒ€ê¸°
         while (!operation.isDone)
         {
             float progress = Mathf.Clamp01(operation.progress / 0.9f);
-            ProgBar.fillAmount = progress; // ÁøÇà·ü ¾÷µ¥ÀÌÆ®
+            ProgBar.fillAmount = progress; // ì§„í–‰ë¥  ì—…ë°ì´íŠ¸
             yield return null;
         }
     }

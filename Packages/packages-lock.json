@@ -15,7 +15,7 @@
       }
     },
     "com.rlabrecque.steamworks.net": {
-      "version": "file:C:/Unity/_Pkg/Steamworks.NET-master/com.rlabrecque.steamworks.net",
+      "version": "file:C:/Yun JinYeol/Unity/_pkg/Steamworks.NET-master/com.rlabrecque.steamworks.net",
       "depth": 0,
       "source": "local",
       "dependencies": {}

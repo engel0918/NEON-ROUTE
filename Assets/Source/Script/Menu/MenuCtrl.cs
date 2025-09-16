@@ -1,4 +1,5 @@
 ﻿using Opsive.UltimateCharacterController.Inventory;
+using Steamworks;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -192,7 +193,14 @@ public class MenuCtrl : MonoBehaviour
                 { ErrorTxt.SetTrigger("Act"); Debug.Log("Go_Error"); }
             }
             else if (Exits.Equals("Exit"))
-            { Application.Quit(); }
+            {
+                // SteamAPI 종료
+                if (SteamManager.Initialized)
+                    SteamAPI.Shutdown();
+
+                // Unity 게임 종료
+                Application.Quit();
+            }
         }
         else
         { menuObj.ExitUI.SetActive(false); }

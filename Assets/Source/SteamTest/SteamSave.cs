@@ -6,6 +6,8 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 using System.Security.Cryptography;
+using System.IO;
+
 
 [System.Serializable]
 
@@ -189,7 +191,6 @@ public class SteamSave : MonoBehaviour
 
     public string SetDat_Check()
     {
-
         Steam_Set();
 
         ////클라우드 삭제 기능
@@ -204,7 +205,6 @@ public class SteamSave : MonoBehaviour
         //    bool deleted = SteamRemoteStorage.FileDelete(Cha_Path);
         //    Debug.Log("File Deleted: " + Cha_Path + deleted);
         //}
-
 
 
         if (!SteamRemoteStorage.FileExists(SETTINGS_FILE))
@@ -235,11 +235,11 @@ public class SteamSave : MonoBehaviour
 
             EquipPT = EquipPT,
 
-           HeadCol = Head_Col,
-           Core_Col = Core_Col,
-           Body_Col = Body_Col, 
-           Arms_Col = Arms_Col, 
-           Legs_Col = Legs_Col
+            HeadCol = Head_Col,
+            Core_Col = Core_Col,
+            Body_Col = Body_Col,
+            Arms_Col = Arms_Col,
+            Legs_Col = Legs_Col
         };
 
         string json = JsonUtility.ToJson(data);
@@ -489,7 +489,6 @@ public class SteamSave : MonoBehaviour
         RankApply();
     }
 
-
     // 내 정보 들고오기
     public void LoadMyProfilePicture(Action<Texture2D> onAvatarReady = null)
     {
@@ -541,7 +540,6 @@ public class SteamSave : MonoBehaviour
             }
         }
     }
-
 
     void RankApply()
     {
