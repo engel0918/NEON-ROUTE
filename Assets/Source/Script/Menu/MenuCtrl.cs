@@ -3,6 +3,7 @@ using Steamworks;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -32,6 +33,7 @@ public class MenuCtrl : MonoBehaviour
     public string Exits;
 
     [SerializeField] List<string> Opened_UI = new List<string>();
+    [SerializeField] List<string> Close_UI = new List<string>();
 
     private void Awake()
     {
@@ -58,8 +60,8 @@ public class MenuCtrl : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            // 켜진 UI가 없을 때, 
-            if (Opened_UI.Count <= 0)
+            // 켜진 UI와 종료UI가 없을 때, 
+            if (Opened_UI.Count <= 0 && Close_UI.Count <= 0)
             {
                 //설정UI 켜기
 
@@ -72,7 +74,7 @@ public class MenuCtrl : MonoBehaviour
                 Opened_UI.Add("Setting");
             }
             // 켜진 UI가 있을 때, 
-            else
+            else if (Opened_UI.Count > 0 || Close_UI.Count > 0)
             {
                 string lastUI = Opened_UI[Opened_UI.Count - 1];
 

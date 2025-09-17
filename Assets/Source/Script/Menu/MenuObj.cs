@@ -11,7 +11,6 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
 public class MenuObj : MonoBehaviour
 {
     private const string SETTINGS_FILE = "settings.json";
