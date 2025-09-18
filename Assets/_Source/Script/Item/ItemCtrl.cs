@@ -19,10 +19,10 @@ public class ItemCtrl : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public Inven_Ctrl inven;
     public int Count;
     int It_Num;
-    public string Type;
-
+    public string Type, Parts;
 
     [SerializeField] Sprite Thum_spr;
+
 
     private void OnEnable()
     {
@@ -48,19 +48,38 @@ public class ItemCtrl : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             }
         }
 
-        for (int i = 0; i <= (ItList.It_Data.Count - 1); i++)
+        It_Num = -1;
+
+        if (It_Num == -1)
         {
-            if (ItList.It_Data[i].Id == Item_ID)
+            for (int i = 0; i <= (ItList.It_Data.Count - 1); i++)
             {
-                It_Num = i;
+                if (ItList.It_Data[i].Id == Item_ID)
+                {
+                    Type = ItList.It_Data[i].Types;
+                    Parts = ItList.It_Data[i].Parts;
 
-                Type = ItList.It_Data[i].Types;
+                    It_Num = i;
 
-                // 장비인 경우, Count text 안보이게
-                if (ItList.It_Data[i].Types == "장비")
-                { txt_Count.gameObject.SetActive(false); }
+                    break;
+                }
+            }
 
-                break;
+            for (int i = 0; i <= (ItList.Pt_Data.Count - 1); i++)
+            {
+                if (ItList.Pt_Data[i].Id == Item_ID)
+                {
+                    Type = ItList.Pt_Data[i].Types;
+                    Parts = ItList.Pt_Data[i].Parts;
+
+                    // 장비인 경우, Count text 안보이게
+                    if (Parts != "류탄")
+                    { txt_Count.gameObject.SetActive(false); }
+
+                    It_Num = i;
+
+                    break;
+                }
             }
         }
     }
@@ -73,7 +92,14 @@ public class ItemCtrl : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             { hover = GameObject.Find("item_hover").GetComponent<HoverUI>(); }
 
             if (It_Num != -1)
-            { hover.Txting(It_Num, Thum_spr); }
+            {
+                if (Type == "장비")
+                { hover.Txting(It_Num, Thum_spr, "Part"); }
+                else
+                {
+                    { hover.Txting(It_Num, Thum_spr, "Item"); }
+                }
+            }
         }
 
         //Debug.Log("마우스가 이미지 위에 올라옴");

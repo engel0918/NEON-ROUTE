@@ -934,6 +934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   It_Data: []
+  Pt_Data: []
   thums:
   - Id: Clt_01
     Thumnail: {fileID: 1001517073428975098, guid: 5b26c7177ce22e14fb785a7a32f6d37f,
@@ -2921,6 +2922,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Main_UI(Canvas)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3209853848153500884, guid: 2d5efc44735353c42b0149b66831748b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3235287163665402417, guid: 2d5efc44735353c42b0149b66831748b,
         type: 3}
